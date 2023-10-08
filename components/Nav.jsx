@@ -6,9 +6,7 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders} from 'next-auth/react'
 
 const Nav = () => {
-  // dummpy data
-  // TODO:  
-  const isUserLoggedIn = true; 
+  const {data: session} = useSession();
 
   // initialize providers
   const [providers, setProviders] = useState(null)
@@ -17,7 +15,12 @@ const Nav = () => {
       const response = await getProviders();
       setProviders(response);
     }
+    fetchProviders();
   }, [])
+
+  useEffect(() => {
+    console.log(providers)
+  },[providers])
 
   const [isDropdownToggled, setIsDropdownToggled] = useState(false);
 
@@ -36,7 +39,7 @@ const Nav = () => {
 
       {/* Desktop Nav Bar */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn?
+        {session?.user?
           <div className="
             flex
             gap-3
@@ -65,7 +68,7 @@ const Nav = () => {
           :<>
             {providers &&
               Object.values(providers).map(
-                (provider)=>{
+                (provider)=>(
                   <button className="black_btn"
                     type="button"
                     key={provider.name}
@@ -73,7 +76,7 @@ const Nav = () => {
                   >
                     Sign in with {provider.name}
                   </button>
-                }
+                )
               )
             }
           </>
@@ -82,7 +85,7 @@ const Nav = () => {
 
       {/* Mobile Nav Bar */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn?(
+        {session?.user?(
           <div className="flex">
                 <Image 
                 src='/assets/images/logo.svg'
@@ -124,7 +127,7 @@ const Nav = () => {
           <>
           {providers &&
               Object.values(providers).map(
-                (provider)=>{
+                (provider)=>(
                   <button className="black_btn"
                     type="button"
                     key={provider.name}
@@ -132,7 +135,7 @@ const Nav = () => {
                   >
                     Sign in with {provider.name}
                   </button>
-                }
+                )
               )
             }
           </>
