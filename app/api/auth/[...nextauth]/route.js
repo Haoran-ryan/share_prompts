@@ -35,7 +35,7 @@ const handler = NextAuth({
                 return true // successful sign in
             }catch(err){
                 // unsuccessful sign in
-                console.log(err)
+                console.log('Error in signIn callback \n', err)
                 return false 
             }
         }  
