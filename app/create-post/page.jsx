@@ -7,13 +7,35 @@ import { useRouter } from "next/router";
 import Form from "@components/Form";
 
 const createPost = () => {
+    const router = useRouter();
+    const { data: session } = useSession();
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [post, setPost] = useState({ 
         prompt: "", 
         tag: "" 
     });
     const createPost = async (e)=>{
-        console.log(e)
+        e.preventDefault();
+        setIsSubmitting(true);
+        try{
+            const response = await fetch('/api/prompt/new',{
+                method: 'POST',
+                body: JSON.stringify({
+                    prompt: post.prompt,
+                    userId: session?.user.id,
+                    tag: post.tag
+                }),
+            })
+
+            if(response.ok){
+                router.push("/")
+            }
+        }catch(err){
+            console.log(err);
+        }finally{
+            setIsSubmitting(false);
+        }
     }
   return (
     <Form 
