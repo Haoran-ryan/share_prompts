@@ -7,7 +7,7 @@ const PromptSchema = new Schema({
     },
     author:{
         type: Schema.Types.ObjectId,
-        ref: "user",
+        ref: "User",
     },
     tag:{
         type: String,

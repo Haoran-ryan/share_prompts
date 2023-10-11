@@ -21,27 +21,37 @@ const Feed = () => {
 
   };
 
+  const handleTagClick = ()=>{
+    console.log("handletagclick function")
+  }
+
   // fetch Data from the API / DB 
   const [allPosts, setAllPosts] = useState([]);
-  useEffect(()=>{
-    const fetchPosts = async()=>{
-      const res = await fetch('/api/prompts');
-      const data = await res.json();
+  const fetchPosts = async()=>{
+    const res = await fetch('/api/prompt');
+    const data = await res.json();
+    setAllPosts(data);
+  }; 
 
-      setAllPosts(data);
-    }; 
+  useEffect(()=>{
     fetchPosts();
   },[])
+
+  // TODO: debugging 
+  // useEffect(()=>{
+  //   console.log("allPosts", allPosts)
+  // },[allPosts])
 
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
-        <input type="text" 
-        className="search_input peer" 
-        placeholder="Search for a tag or a username"
-        value={searchText}
-        onChange={handleSearchChange}
-        required
+        <input 
+          type="text" 
+          className="search_input peer" 
+          placeholder="Search for a tag or a username"
+          value={searchText}
+          onChange={handleSearchChange}
+          required
         />
       </form>
       <PromptCardList
