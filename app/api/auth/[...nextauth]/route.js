@@ -29,7 +29,7 @@ const handler = NextAuth({
                     await User.create({
                         email:profile.email,
                         username:profile.name.replace(" ","").toLowerCase(), // no spaces, all lowercase
-                        image:profile.image,
+                        image:profile.picture,
                     })
                 }
                 return true // successful sign in

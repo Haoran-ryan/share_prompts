@@ -3,16 +3,18 @@ import { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
 // single-use component
 const PromptCardList = ({data, handleTagClick}) =>{
-  <div className="mt-16 prompt_layout">
-    {data.map((post)=>(
-        <PromptCard 
-          key={post.id}
-          id={post.id}
-          handleTagClick={handleTagClick}
-          />
-      )
-    )}
-  </div>
+  return(
+    <div className="mt-16 prompt_layout">
+      {data.map((post)=>(
+          <PromptCard 
+            key={post._id}
+            post={post}
+            handleTagClick={handleTagClick}
+            />
+        )
+      )}
+    </div>
+  )
 }
 
 const Feed = () => {
@@ -27,20 +29,17 @@ const Feed = () => {
 
   // fetch Data from the API / DB 
   const [allPosts, setAllPosts] = useState([]);
-  const fetchPosts = async()=>{
-    const res = await fetch('/api/prompt');
-    const data = await res.json();
+  const fetchPosts = async () => {
+    const response = await fetch("/api/prompt");
+    const data = await response.json();
+
     setAllPosts(data);
-  }; 
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchPosts();
-  },[])
+  }, []);
 
-  // TODO: debugging 
-  // useEffect(()=>{
-  //   console.log("allPosts", allPosts)
-  // },[allPosts])
 
   return (
     <section className="feed">
