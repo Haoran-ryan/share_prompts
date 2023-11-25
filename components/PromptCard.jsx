@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { set } from "mongoose";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete}) => {
   const [copiedPrompt, setCopiedPrompt] = useState("");
@@ -14,7 +13,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete}) => {
 
   const handleCopy = () => {
     setCopiedPrompt(post.prompt);
-    navigator.clipboard.writeText(post.prompt);
+    navigator.clipboard.writeText(post.prompt); // navigator is a global object in the browser environment
     setTimeout(() => {
       setCopiedPrompt("");
     },3000);
