@@ -49,18 +49,17 @@ const Form = ({type, post, setPost, isSubmitting, handleSubmit}) => {
 
         {/* buttons */}
         <div className="flex-end mx-3 mb-5 gap-4">
-          <Link href="/" className="text-gray-500 text-sm">
+          <Link href="/" className="text-gray-500 text-sm border-slate-500 border-[1px] rounded-full px-5 py-1.5">
             Cancel
           </Link>
-        </div>
-
-        <button
+          <button
           type="submit"
           disabled={isSubmitting}
           className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white"
         >
           {isSubmitting? `${type}...`: type}
         </button>
+        </div>
         </form>
     </section>
   )
