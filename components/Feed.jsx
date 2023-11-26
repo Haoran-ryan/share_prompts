@@ -24,8 +24,8 @@ const Feed = () => {
     setSearchText(e.target.value)
   };
 
-  const handleTagClick = ()=>{
-    console.log("handletagclick function")
+  const handleTagClick = (clickedTag)=>{
+    console.log("handletagclick function" , clickedTag)
   }
 
   // fetch Data from the API / DB 

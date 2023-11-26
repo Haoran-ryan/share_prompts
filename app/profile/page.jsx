@@ -45,7 +45,7 @@ const MyProfile = () => {
   };
   return (
     <Profile
-      name='Ryan'
+      name='My'
       desc='Welcome to your personalize profile page'
       data={posts}
       handleEdit={handleEdit}

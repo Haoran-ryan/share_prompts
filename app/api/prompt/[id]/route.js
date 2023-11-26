@@ -19,6 +19,7 @@ export const GET = async(request, { params })=>{
 
 
 // PATCH (update)
+// choose PATCH over PUT because PUT is for replacing the entire resource (full update)
 export const PATCH = async (request, { params })=>{
     const { prompt, tag } = await request.json();
     try {
