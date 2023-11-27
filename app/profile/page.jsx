@@ -10,17 +10,20 @@ const MyProfile = () => {
   const [posts, setPosts] = useState([]);
 
   const router = useRouter();
-  const fetchPosts = async () => {
-    const response = await fetch(`/api/users/${session?.user.id}/posts`);
-    const data = await response.json();
-    setPosts(data);
-  };
+
 
   useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/users/${session?.user.id}/posts`);
+      const data = await response.json();
+      setPosts(data);
+    };
+    
     if(session?.user.id){
       fetchPosts();
     }
   }, [session?.user.id]);
+
   const handleEdit = (post) => {
      // not immediate edit, but redirect to edit page
     router.push(`/update-prompt?id=${post._id}`)

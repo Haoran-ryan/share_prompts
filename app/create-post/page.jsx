@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import Form from "@components/Form";
 
-const createPost = () => {
+const CreatePost = () => {
     const router = useRouter();
     const { data: session } = useSession();
 
@@ -48,4 +48,4 @@ const createPost = () => {
   )
 }
 
-export default createPost;
+export default CreatePost;
