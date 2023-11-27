@@ -18,7 +18,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete}) => {
       setCopiedPrompt("");
     },3000);
   };
-
+  
   return (
     <div className="prompt_card">
       <div

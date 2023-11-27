@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
+import { set } from "mongoose";
 // single-use component
 const PromptCardList = ({data, handleTagClick}) =>{
   return(
@@ -18,14 +19,13 @@ const PromptCardList = ({data, handleTagClick}) =>{
 }
 
 const Feed = () => {
-  const [searchText, setSearchText] = useState('');
-  const handleSearchChange = (e) => {
-    console.log(e.target.value)
-    setSearchText(e.target.value)
-  };
 
+  const [searchedResults, setSearchedResults] = useState([]);
   const handleTagClick = (clickedTag)=>{
-    console.log("handletagclick function" , clickedTag)
+    setSearchText(clickedTag);
+
+    const searchResult = filterPrompts(clickedTag);
+    setSearchedResults(searchResult);
   }
 
   // fetch Data from the API / DB 
@@ -41,6 +41,29 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
+  const filterPrompts = (searchText) => {
+    const regex = new RegExp(searchText, "i"); // i for case insensitive
+    return allPosts.filter((post) =>
+      regex.test(post.author.usernmae) ||
+      regex.test(post.prompt) ||
+      regex.test(post.tag)
+      )
+  };
+
+  const [searchText, setSearchText] = useState('');
+  const [searchTimeOut, setSearchTimeOut] = useState(null);
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeOut);
+    setSearchText(e.target.value);
+
+    // debounce method
+    setSearchTimeOut(
+      setTimeout(() => {
+        const searchResult = filterPrompts(e.target.value);
+        setSearchedResults(searchResult);
+      }, 500)
+    );
+  };
 
   return (
     <section className="feed">
@@ -54,10 +77,17 @@ const Feed = () => {
           required
         />
       </form>
-      <PromptCardList
+      {searchText? (
+        <PromptCardList
+          data={searchedResults}
+          handleTagClick={handleTagClick}
+        />
+      ) 
+      :
+      (<PromptCardList
         data={allPosts}
         handleTagClick={handleTagClick}
-      />
+      />)}
     </section>
   )
 }
